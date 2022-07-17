@@ -8,6 +8,10 @@ const app = express();
 
 const categoriesRouter = require("./app/api/v1/categories/router");
 
+// middlewares
+const notFoundMiddleware = require("./app/middlewares/not-found");
+const handleErrorMiddleware = require("./app/middlewares/handler-error");
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -15,5 +19,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(APIv1, categoriesRouter);
+
+// middlewares
+app.use(notFoundMiddleware);
+app.use(handleErrorMiddleware);
 
 module.exports = app;

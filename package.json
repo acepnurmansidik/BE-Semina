@@ -11,6 +11,7 @@
     "debug": "~2.6.9",
     "dotenv": "^16.0.1",
     "express": "~4.16.1",
+    "http-status-code": "^2.1.0",
     "mongoose": "^6.4.4",
     "morgan": "~1.9.1"
   },
