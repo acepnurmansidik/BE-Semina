@@ -5,6 +5,7 @@ const {
   updateEvents,
   getOneEvents,
   deleteEvents,
+  updateStatusEvent,
 } = require("../../../services/mongo/events");
 
 const index = async (req, res, next) => {
@@ -57,4 +58,14 @@ const destroy = async (req, res, next) => {
   }
 };
 
-module.exports = { index, find, create, update, destroy };
+const updateStatus = async (req, res, next) => {
+  try {
+    const result = await updateStatusEvent(req);
+
+    res.status(StatusCodes.OK).json({ data: result });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { index, find, create, update, destroy, updateStatus };

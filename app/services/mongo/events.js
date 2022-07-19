@@ -174,10 +174,30 @@ const deleteEvents = async (req) => {
   return result;
 };
 
+const updateStatusEvent = async (req) => {
+  const { id, status } = req.params;
+
+  console.log("status");
+  console.log(status);
+
+  const checkEvents = await Events.findOne({ _id: id });
+
+  if (!checkEvents) throw new NotFoundError(`No events with id: ${id}`);
+
+  const result = await Events.findOneAndUpdate(
+    { _id: id },
+    { statusEvent: status },
+    { new: true, runValidators: true }
+  );
+
+  return result;
+};
+
 module.exports = {
   getAllEvents,
   createEvents,
   getOneEvents,
   updateEvents,
   deleteEvents,
+  updateStatusEvent,
 };
