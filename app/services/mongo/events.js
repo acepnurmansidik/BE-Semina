@@ -9,20 +9,17 @@ const { checkingTalents } = require("./talents");
 const { NotFoundError, BadRequestError } = require("../../errors");
 
 const getAllEvents = async (req) => {
-  const { keyword, category, talent } = req.query;
+  const { keyword, category, talent, status } = req.query;
   let condition = {};
 
-  if (keyword) {
+  if (keyword)
     condition = { ...condition, title: { $regex: keyword, $options: "i" } };
-  }
 
-  if (category) {
-    condition = { ...condition, category: category };
-  }
+  if (category) condition = { ...condition, category };
 
-  if (talent) {
-    condition = { ...condition, talent: talent };
-  }
+  if (talent) condition = { ...condition, talent };
+
+  if (status) condition = { ...condition, statusEvent: status };
 
   const result = await Events.find(condition)
     .populate({ path: "image", select: "_id name" })
