@@ -27,9 +27,10 @@ const createImage = async (req) => {
 const checkingImage = async (id) => {
   const result = await Image.findOne({ _id: id });
 
-  if (!result) throw new NotFoundError(`No image with ud: ${id}`);
+  if (!result) throw new NotFoundError(`Tidak ada Gambar dengan id :  ${id}`);
 
   return result;
 };
 
-module.exports = { createImage, generateUrlImage, checkingImage };
+// export function checkingImage
+module.exports = { createImage, checkingImage };

@@ -9,6 +9,7 @@ const app = express();
 const categoriesRouter = require("./app/api/v1/categories/router");
 const imagesRouter = require("./app/api/v1/images/router");
 const talentsRouter = require("./app/api/v1/talents/router");
+const eventsRouter = require("./app/api/v1/events/router");
 
 // middlewares
 const notFoundMiddleware = require("./app/middlewares/not-found");
@@ -24,6 +25,7 @@ app.use(APIv1, categoriesRouter);
 app.use(APIv1, imagesRouter);
 app.use(APIv1, categoriesRouter);
 app.use(APIv1, talentsRouter);
+app.use(APIv1, eventsRouter);
 
 // middlewares
 app.use(notFoundMiddleware);
