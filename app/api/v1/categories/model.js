@@ -9,6 +9,11 @@ let categorySchema = Schema(
       maxLength: [20, "Maximum length category name 20 character"],
       required: [true, "Name cannot be empty!"],
     },
+    organizer: {
+      type: mongoose.Types.ObjectId,
+      ref: "Organizer",
+      require: true,
+    },
   },
   { timestamps: true }
 );
