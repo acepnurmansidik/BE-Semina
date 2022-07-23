@@ -72,6 +72,11 @@ let EventSchema = new mongoose.Schema({
     require: true,
     ref: "Talent",
   },
+  organizer: {
+    type: mongoose.Types.ObjectId,
+    require: true,
+    ref: "Organizer",
+  },
   tickets: {
     type: [ticketCategoriesSchema],
     require: true,

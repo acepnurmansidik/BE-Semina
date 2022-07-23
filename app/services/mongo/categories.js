@@ -13,7 +13,10 @@ const createCategories = async (req) => {
   const { name } = req.body;
 
   // search name category
-  const check = await Categories.findOne({ name });
+  const check = await Categories.findOne({
+    name,
+    organizer: req.user.organizer,
+  });
 
   // if exist return error bad request
   if (check)
