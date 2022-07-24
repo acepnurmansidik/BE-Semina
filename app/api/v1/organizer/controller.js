@@ -2,7 +2,18 @@ const { StatusCodes } = require("http-status-codes");
 const {
   createOrganizer,
   createUser,
+  getAllUsers,
 } = require("../../../services/mongo/users");
+
+const getCMSUsers = async (req, res, next) => {
+  try {
+    const result = await getAllUsers(req);
+
+    res.status(StatusCodes.OK).json({ data: result });
+  } catch (err) {
+    next(err);
+  }
+};
 
 const createCMSOrganizer = async (req, res, next) => {
   try {
@@ -14,7 +25,7 @@ const createCMSOrganizer = async (req, res, next) => {
   }
 };
 
-const createCMUser = async (req, res, next) => {
+const createCMSUser = async (req, res, next) => {
   try {
     const result = await createUser(req);
 
@@ -26,5 +37,6 @@ const createCMUser = async (req, res, next) => {
 
 module.exports = {
   createCMSOrganizer,
-  createCMUser,
+  createCMSUser,
+  getCMSUsers,
 };

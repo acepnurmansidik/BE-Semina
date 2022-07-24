@@ -1,9 +1,29 @@
 const express = require("express");
-const { authenticateUser } = require("../../../middlewares/auth");
+const {
+  authenticateUser,
+  authorizeRoles,
+} = require("../../../middlewares/auth");
 const router = express.Router();
-const { createCMSOrganizer, createCMUser } = require("./controller");
+const {
+  createCMSOrganizer,
+  createCMSUser,
+  getCMSUsers,
+} = require("./controller");
 
-router.post("/organizers", authenticateUser, createCMSOrganizer);
-router.post("/admin", authenticateUser, createCMUser);
+router.get("/users", authenticateUser, authorizeRoles("owner"), getCMSUsers);
+
+router.post(
+  "/organizers",
+  authenticateUser,
+  authorizeRoles("owner"),
+  createCMSOrganizer
+);
+
+router.post(
+  "/users",
+  authenticateUser,
+  authorizeRoles("organizer"),
+  createCMSUser
+);
 
 module.exports = router;

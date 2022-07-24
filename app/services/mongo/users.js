@@ -15,9 +15,8 @@ const createOrganizer = async (req) => {
     email,
     name,
     password,
-    role,
-    confirmPassword,
     organizer: result._id,
+    role,
   });
 
   delete user._doc.password;
@@ -42,4 +41,10 @@ const createUser = async (req) => {
   return result;
 };
 
-module.exports = { createOrganizer, createUser };
+const getAllUsers = async (req) => {
+  const result = await User.find();
+
+  return result;
+};
+
+module.exports = { createOrganizer, createUser, getAllUsers };
