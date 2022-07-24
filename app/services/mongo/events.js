@@ -19,7 +19,8 @@ const getAllEvents = async (req) => {
 
   if (talent) condition = { ...condition, talent };
 
-  if (status) condition = { ...condition, statusEvent: status };
+  if (["Draft", "Published"].includes(status))
+    condition = { ...condition, statusEvent: status };
 
   const result = await Events.find(condition)
     .populate({ path: "image", select: "_id name" })
@@ -181,19 +182,21 @@ const deleteEvents = async (req) => {
 };
 
 const updateStatusEvent = async (req) => {
-  const { id, status } = req.params;
+  const { id } = req.params;
+  const { statusEvent } = req.body;
+
+  if (!["Draft", "Published"].includes(statusEvent))
+    throw new BadRequestError("Status can only be 'Draft' and 'Published");
 
   const checkEvents = await Events.findOne({ _id: id });
 
   if (!checkEvents) throw new NotFoundError(`No events with id: ${id}`);
 
-  const result = await Events.findOneAndUpdate(
-    { _id: id },
-    { statusEvent: status },
-    { new: true, runValidators: true }
-  );
+  checkEvents.statusEvent = statusEvent;
 
-  return result;
+  await checkEvents.save();
+
+  return checkEvents;
 };
 
 module.exports = {

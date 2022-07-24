@@ -12,6 +12,7 @@ const imagesRouter = require("./app/api/v1/images/router");
 const talentsRouter = require("./app/api/v1/talents/router");
 const eventsRouter = require("./app/api/v1/events/router");
 const organizerRouter = require("./app/api/v1/organizer/router");
+const ordersRouter = require("./app/api/v1/orders/router");
 
 // middlewares
 const notFoundMiddleware = require("./app/middlewares/not-found");
@@ -29,6 +30,7 @@ app.use(APIv1, categoriesRouter);
 app.use(APIv1, talentsRouter);
 app.use(APIv1, eventsRouter);
 app.use(APIv1, organizerRouter);
+app.use(APIv1, ordersRouter);
 
 // middlewares
 app.use(notFoundMiddleware);

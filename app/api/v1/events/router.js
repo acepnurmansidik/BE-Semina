@@ -29,9 +29,9 @@ router.delete(
   destroy
 );
 router.put(
-  "/events/:id/:status",
+  "/events/:id/status",
   authenticateUser,
-  authorizeRoles("owner"),
+  authorizeRoles("organizer"),
   updateStatus
 );
 
