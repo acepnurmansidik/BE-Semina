@@ -96,7 +96,7 @@ const orderSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ["pending", "paid"],
-    default: ["pending"],
+    default: "pending",
   },
   totalPay: {
     type: Number,

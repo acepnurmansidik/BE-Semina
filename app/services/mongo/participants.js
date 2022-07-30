@@ -137,11 +137,11 @@ const checkoutOrder = async (req) => {
   // check Event
   if (!checkingEvent) throw new NotFoundError(`Not events with id: ${event}`);
 
-  const checingPayment = await Payments.findOne({ _id: payment });
+  const checkingPayment = await Payments.findOne({ _id: payment });
 
   // check Payment
-  if (!checingPayment)
-    throw new NotFoundError(`Not events with id: ${payment}`);
+  if (!checkingPayment)
+    throw new NotFoundError(`Not payments with id: ${payment}`);
 
   let totalPay = 0,
     totalOrderTicket = 0;
@@ -151,19 +151,19 @@ const checkoutOrder = async (req) => {
     // looping jumlah ticket tersedia di event tersebut
     checkingEvent.tickets.map((ticket) => {
       // check type ticket categoris for compare
-      if (tic.ticketCategories.type === ticket.type) {
+      if (tic.ticketCategory.type === ticket.type) {
         /**
          * check stock available
          * jika tiket yang dibeli lebih banya dari yang tersedia maka akan error
          */
-        if (tic.ticketCategories > ticket.stock) {
-          throw new NotFoundError("Insufficient stock of event tickets");
+        if (tic.sumTicket > ticket.stock) {
+          throw new NotFoundError("Insufficient stock of event tickets!");
         } else {
           // kurangi jumlah stock ticket
-          ticket.stock = ticket.stock -= tic.sumTicket;
+          ticket.stock -= tic.sumTicket;
 
           totalOrderTicket += tic.sumTicket;
-          totalPay += tic.ticketCategories.price * tic.sumTicket;
+          totalPay += tic.ticketCategory.price * tic.sumTicket;
         }
       }
     });
@@ -193,7 +193,7 @@ const checkoutOrder = async (req) => {
     totalPay,
     totalOrderTicket,
     orderItems: tickets,
-    participant: req.participant._id,
+    participant: req.participant.id,
     event,
     historyEvent,
     payment,
