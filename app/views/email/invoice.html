@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Semina invoice</title>
+  </head>
+  <div style="padding: 30px;position: relative;">
+    <div class="toolbar hidden-print">
+      <hr />
+    </div>
+    <div class="overflow-auto" style="position: relative;background-color: #fff;min-height: 680px;padding: 15px;">
+      <div style="min-width: 600px">
+        <header
+          style="
+            padding: 10px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #3989c6;
+          "
+        >
+          <div class="row">
+            <div class="col" style="text-align: left">
+              <h2 style="margin-top: 0; margin-bottom: 0">
+                <a target="_blank" href="https://lobianijs.com"> Semina </a>
+              </h2>
+              <div>455 Foggy Heights, AZ 85004, US</div>
+              <div>(123) 456-789</div>
+              <div>semina@example.com</div>
+            </div>
+          </div>
+        </header>
+        <main style="padding-bottom: 25px">
+          <div class="row" style="margin-bottom: 20px">
+            <div class="col" style="text-align: left">
+              <div class="text-gray-light">INVOICE TO:</div>
+              <h2 class="to" style="margin-top: 0; margin-bottom: 0">
+                {{receive}}
+              </h2>
+              <div class="email">
+                <a href="mailto:john@example.com">{{email}}</a>
+              </div>
+            </div>
+            <div class="col" style="text-align: right;">
+              <h1 style="margin-top: 0; color: #3989c6">
+                INVOICE
+              </h1>
+              <div class="date">{{id}}</div>
+              <div class="date">{{invoiceDate}}</div>
+            </div>
+          </div>
+          <table border="0" cellspacing="0" cellpadding="0" style="width: 100%; border-collapse: collapse;border-spacing: 0;margin-bottom: 20px;">
+            <thead>
+              <tr>
+                <th style="padding: 15px;background: #eee;border-bottom: 1px solid #fff;white-space: nowrap;font-size: 16px;font-weight: 400;">#</th>
+                <th style="padding: 15px;background: #eee;border-bottom: 1px solid #fff;white-space: nowrap;font-size: 16px;font-weight: 400;">DESCRIPTION</th>
+                <th style="padding: 15px;background: #eee;border-bottom: 1px solid #fff;white-space: nowrap;font-size: 16px;font-weight: 400;">QTY</th>
+                <th style="padding: 15px;background: #eee;border-bottom: 1px solid #fff;white-space: nowrap;font-size: 16px;font-weight: 400;">PRICE</th>
+                <th style="padding: 15px;background: #eee;border-bottom: 1px solid #fff;white-space: nowrap;font-size: 16px;font-weight: 400;">TOTAL</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#orderTickets}}
+              <tr>
+                <td style="color: #fff; font-size: 1.6em; background: #3989c6;padding: 15px;background: #eee;border-bottom: 1px solid #fff;">
+                  #
+                </td>
+                <td style="padding: 15px;background: #eee;border-bottom: 1px solid #fff;">
+                  <h3 style="margin: 0;font-weight: 400;color: #3989c6;font-size: 1.2em;">{{title}}</h3>
+                  {{tagline}}
+                </td>
+                <td style="text-align: right; font-size: 1.2em;padding: 15px;background: #eee;border-bottom: 1px solid #fff;">{{qty}}</td>
+                <td style="text-align: right; font-size: 1.2em;padding: 15px;background: #eee;border-bottom: 1px solid #fff;background: #ddd;">
+                  Rp. {{price}}
+                </td>
+                <td style="text-align: right; font-size: 1.2em;padding: 15px;background: #eee;border-bottom: 1px solid #fff;background: #3989c6;color: #fff;">
+                  Rp. {{subTotalPrice}}
+                </td>
+              </tr>
+              {{/orderTickets}}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2" style="padding: 15px;background: #eee;border-bottom: 1px solid #fff;background: 0 0;border-bottom: none;white-space: nowrap;text-align: left;padding: 10px 0;font-size: 1.2em;border-top: 1px solid #aaa;border-top: none;border: none;font-style: italic;">{{terbilang}}</td>
+                <td colspan="2" style="padding: 15px;background: #eee;border-bottom: 1px solid #fff;background: 0 0;border-bottom: none;white-space: nowrap;text-align: right;padding: 10px 20px;font-size: 1.2em;border-top: 1px solid #aaa;border-top: none;"></td>
+                <td style="color: rgb(66, 66, 66);padding: 15px;background: #eee;border-bottom: 1px solid #fff;background: 0 0;border-bottom: none;white-space: nowrap;text-align: right;padding: 10px 20px;font-size: 1.2em;border-top: 1px solid #aaa;border-top: none;"></td>
+              </tr>
+              <tr style="border: none;">
+                <td colspan="2" style="padding: 15px;background: #eee;border-bottom: 1px solid #fff;background: 0 0;border-bottom: none;white-space: nowrap;text-align: right;padding: 10px 20px;font-size: 1.2em;border-top: 1px solid #aaa;color: #3989c6;font-size: 1.4em;border-top: 1px solid #3989c6;border: none;"></td>
+                <td colspan="2" style="padding: 15px;background: #eee;border-bottom: 1px solid #fff;background: 0 0;border-bottom: none;white-space: nowrap;text-align: right;padding: 10px 20px;font-size: 1.2em;border-top: 1px solid #aaa;color: #3989c6;font-size: 1.4em;border-top: 1px solid #3989c6;">GRAND TOTAL</td>
+                <td style="padding: 15px;background: #eee;border-bottom: 1px solid #fff;background: 0 0;border-bottom: none;white-space: nowrap;text-align: right;padding: 10px 20px;font-size: 1.2em;border-top: 1px solid #aaa;color: #3989c6;font-size: 1.4em;border-top: 1px solid #3989c6;">Rp. {{grandTotal}}</td>
+              </tr>
+            </tfoot>
+          </table>
+          <div style="margin-top: -50px;font-size:1.5em;margin-bottom:2px;background: yellow;width: 75px;padding: 2px 5px;text-align: center;border-radius: 3px;">{{status}}</div>
+          <div style="margin-top: -100px;font-size:2em;margin-bottom:50px">Thank you!</div>
+          <div style="padding-left: 6px;border-left: 6px solid #3989c6;">
+            <div>NOTICE:</div>
+            <div style="font-size: 1.2em;">
+              A finance charge of 1.5% will be made on unpaid balances after 30
+              days.
+            </div>
+          </div>
+        </main>
+        <footer style="width: 100%;text-align: center;color: #777;border-top: 1px solid #aaa;padding: 8px 0;">
+          Invoice was created on a computer and is valid without the signature
+          and seal.
+        </footer>
+      </div>
+      <!--DO NOT DELETE THIS div. IT is responsible for showing footer always at the bottom-->
+      <div></div>
+    </div>
+  </div>
+</html>

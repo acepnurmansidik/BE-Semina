@@ -2,6 +2,9 @@ const Orders = require("../../api/v1/orders/model");
 const Participants = require("../../api/v1/participants/model");
 const Events = require("../../api/v1/events/model");
 const Payments = require("../../api/v1/payments/model");
+const moment = require("moment");
+const numeral = require("numeral");
+const terbilang = require("angka-menjadi-terbilang");
 
 const {
   NotFoundError,
@@ -10,7 +13,7 @@ const {
 } = require("../../errors");
 
 const { createJWT } = require("../../utils");
-const { otpMail } = require("../email");
+const { otpMail, invoiceMail } = require("../email");
 const bcryptjs = require("bcryptjs");
 const { createTokenParticipant } = require("../../utils");
 
@@ -124,11 +127,6 @@ const getAllOrders = async (req) => {
   return result;
 };
 
-/**
- * Tugas send email invoice
- * TODO: Ambil data email dari personal detail
- */
-
 const checkoutOrder = async (req) => {
   const { event, personalDetail, payment, tickets } = req.body;
 
@@ -200,6 +198,42 @@ const checkoutOrder = async (req) => {
   });
 
   await result.save();
+
+  /**
+   * Tugas send email invoice
+   * TODO: Ambil data email dari personal detail
+   */
+
+  const orderTickets = result._doc.orderItems.map((item) => {
+    return {
+      price: numeral(item.ticketCategory.price).format("0,0"),
+      qty: item.sumTicket,
+      subTotalPrice: numeral(item.ticketCategory.price * item.sumTicket).format(
+        "0,0"
+      ),
+      title: result._doc.historyEvent.title,
+      tagline: result._doc.historyEvent.tagline,
+    };
+  });
+
+  let invoice = {
+    id:
+      "INV" +
+      "/" +
+      moment(result._doc.historyEvent.date).format("MM/YY") +
+      "/" +
+      result._doc._id,
+    invoiceDate: moment(result._doc.historyEvent.date).format("LLLL"),
+    receive:
+      result.personalDetail.firstname + " " + result.personalDetail.lastname,
+    grandTotal: numeral(result._doc.totalPay).format("0,0"),
+    terbilang: terbilang(result._doc.totalPay),
+    email: result.personalDetail.email,
+    orderTickets,
+    status: result._doc.status,
+  };
+
+  await invoiceMail(result.personalDetail.email, invoice);
 
   return result;
 };
