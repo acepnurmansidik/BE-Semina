@@ -3,9 +3,9 @@ const { signin } = require("../../../services/mongo/auth");
 
 const signinCms = async (req, res, next) => {
   try {
-    const result = await signin(req);
+    const { role, token } = await signin(req);
 
-    res.status(StatusCodes.OK).json({ data: { token: result } });
+    res.status(StatusCodes.OK).json({ data: { role, token } });
   } catch (err) {
     next(err);
   }

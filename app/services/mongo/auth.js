@@ -20,9 +20,9 @@ const signin = async (req) => {
   if (!isPasswordCorrects) throw new UnauthorizedError("Invalid Credentials");
 
   // create token
-  const token = createJWT({ payload: createTokenUser(result) });
+  const token = await createJWT({ payload: createTokenUser(result) });
 
-  return token;
+  return { role: result.role, token };
 };
 
 module.exports = { signin };
