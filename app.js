@@ -16,6 +16,7 @@ const organizerRouter = require("./app/api/v1/organizer/router");
 const ordersRouter = require("./app/api/v1/orders/router");
 const participantsRouter = require("./app/api/v1/participants/router");
 const paymentsRouter = require("./app/api/v1/payments/router");
+const userRefreshTokenRouter = require("./app/api/v1/userRefreshToken/router");
 
 // middlewares
 const notFoundMiddleware = require("./app/middlewares/not-found");
@@ -36,6 +37,7 @@ app.use(`${APIv1}/cms`, eventsRouter);
 app.use(`${APIv1}/cms`, organizerRouter);
 app.use(`${APIv1}/cms`, ordersRouter);
 app.use(`${APIv1}/cms`, paymentsRouter);
+app.use(`${APIv1}/cms`, userRefreshTokenRouter);
 app.use(APIv1, participantsRouter);
 
 // middlewares

@@ -3,9 +3,11 @@ const { signin } = require("../../../services/mongo/auth");
 
 const signinCms = async (req, res, next) => {
   try {
-    const { role, token } = await signin(req);
+    const { role, token, email, refreshToken } = await signin(req);
 
-    res.status(StatusCodes.OK).json({ data: { role, token } });
+    res
+      .status(StatusCodes.OK)
+      .json({ data: { role, email, token, refreshToken } });
   } catch (err) {
     next(err);
   }
