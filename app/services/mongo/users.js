@@ -1,27 +1,24 @@
 const User = require("../../api/v1/users/model");
 const Organizer = require("../../api/v1/organizer/model");
-const { BadRequestError } = require("../../errors");
+const { BadRequestError, NotFoundError } = require("../../errors");
 
-const createOrganizer = async (req) => {
-  const { organizer, email, name, password, confirmPassword, role } = req.body;
+const getAllOrganizers = async () => {
+  const result = await Organizer.find().select("organizer");
 
-  if (password !== confirmPassword) {
-    throw new BadRequestError("Password no macth!");
-  }
+  return result;
+};
 
-  const result = await Organizer.create({ organizer });
+// END # ORGANIZERS =========================================================
+const updateUser = async (req) => {
+  const { id } = req.params;
 
-  const user = await User.create({
-    email,
-    name,
-    password,
-    organizer: result._id,
-    role,
-  });
+  const result = await User.findOneAndUpdate(
+    { _id: id },
+    { ...req.body, organizer: req.user.organizer },
+    { new: true }
+  ).select("name email");
 
-  delete user._doc.password;
-
-  return user;
+  return result;
 };
 
 const createUser = async (req) => {
@@ -41,10 +38,39 @@ const createUser = async (req) => {
   return result;
 };
 
-const getAllUsers = async (req) => {
-  const result = await User.find();
+const getAllUsers = async () => {
+  const result = await User.find()
+    .select("name email organizer role")
+    .populate({ path: "organizer", model: "Organizer", select: "organizer" });
 
   return result;
 };
 
-module.exports = { createOrganizer, createUser, getAllUsers };
+const getOneUser = async (req) => {
+  const { id } = req.params;
+  const result = await User.findOne({ _id: id }).select(
+    "-__v -createdAt -updatedAt -password"
+  );
+
+  if (!result) throw new NotFoundError(`No admin with id ${id}`);
+
+  return result;
+};
+
+const getOneAndRemoveUser = async (req) => {
+  const { id } = req.params;
+  const result = await User.findOneAndRemove({ _id: id });
+
+  if (!result) throw new NotFoundError(`No admin with id ${id}`);
+
+  return result;
+};
+
+module.exports = {
+  createUser,
+  getAllUsers,
+  getAllOrganizers,
+  getOneUser,
+  updateUser,
+  getOneAndRemoveUser,
+};
