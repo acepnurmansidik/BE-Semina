@@ -5,7 +5,7 @@ let talentSchema = Schema(
   {
     name: {
       type: String,
-      require: [true, "Speaker name cannot empty!"],
+      require: [true, "Speaker name can't empty!"],
     },
     role: {
       type: String,

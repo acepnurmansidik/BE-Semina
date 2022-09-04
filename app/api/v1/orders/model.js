@@ -4,7 +4,7 @@ let orderDetailSchema = new mongoose.Schema({
   ticketCategory: {
     type: {
       type: String,
-      required: [true, "Ticket type cannot be empty!"],
+      required: [true, "Ticket type can't be empty!"],
     },
     price: {
       type: Number,
@@ -21,26 +21,26 @@ const orderSchema = new mongoose.Schema({
   historyEvent: {
     title: {
       type: String,
-      require: [true, "Title cannot be empty!"],
+      require: [true, "Title can't be empty!"],
     },
     about: {
       type: String,
-      require: [true, "About cannot be empty!"],
+      require: [true, "About can't be empty!"],
     },
     date: {
       type: Date,
-      require: [true, "Date cannot be empty!"],
+      require: [true, "Date can't be empty!"],
     },
     tagline: {
       type: String,
-      require: [true, "Tagline cannot be empty!"],
+      require: [true, "Tagline can't be empty!"],
     },
     keyPoint: {
       type: [String],
     },
     venueName: {
       type: String,
-      require: [true, "The vanue cannot be empty!"],
+      require: [true, "The vanue can't be empty!"],
     },
     tickets: {
       type: [],

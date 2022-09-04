@@ -5,7 +5,7 @@ let organizersSchema = Schema(
   {
     organizer: {
       type: String,
-      required: [true, "Event organizer cannot be empty!"],
+      required: [true, "Event organizer can't be empty!"],
     },
   },
   { timestamps: true }

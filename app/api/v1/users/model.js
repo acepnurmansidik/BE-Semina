@@ -8,17 +8,17 @@ let userSchema = Schema(
       type: String,
       minlength: [6, "Minimum length name 6 character"],
       maxLength: [20, "Maximum length name 20 character"],
-      required: [true, "Name cannot be empty!"],
+      required: [true, "Name can't be empty!"],
     },
     email: {
       type: String,
-      required: [true, "Email cannot be empty!"],
+      required: [true, "Email can't be empty!"],
     },
     password: {
       type: String,
       minlength: [6, "Minimum length password 6 character"],
       maxLength: [20, "Maximum length password 20 character"],
-      required: [true, "Password cannot be empty!"],
+      required: [true, "Password can't be empty!"],
     },
     role: {
       type: String,

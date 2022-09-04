@@ -7,7 +7,7 @@ const participantSchema = new mongoose.Schema(
       type: String,
       minlength: [3, "Minimum length firstname 3 character"],
       maxLength: [50, "Maximum length firstname 50 character"],
-      required: [true, "Firstname cannot be empty"],
+      required: [true, "Firstname can't be empty"],
     },
     lastname: {
       type: String,
@@ -15,13 +15,13 @@ const participantSchema = new mongoose.Schema(
     email: {
       type: String,
       unique: true,
-      required: [true, "Email cannot be empty!"],
+      required: [true, "Email can't be empty!"],
     },
     password: {
       type: String,
       minlength: [6, "Minimum length firstname 3 character"],
       maxLength: [50, "Maximum length firstname 50 character"],
-      required: [true, "Email cannot be empty!"],
+      required: [true, "Email can't be empty!"],
     },
     role: {
       type: String,
