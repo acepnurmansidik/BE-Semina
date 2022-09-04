@@ -6,7 +6,7 @@ const {
   createTokenUser,
 } = require("../../utils");
 const Users = require("../../api/v1/users/model");
-const { BadRequestError } = require("../../errors");
+const { BadRequestError, NotFoundError } = require("../../errors");
 
 const createUserRefreshToken = async (payload) => {
   const result = await UserRefreshToken.create(payload);
@@ -15,14 +15,12 @@ const createUserRefreshToken = async (payload) => {
 };
 
 const getUserRefreshToken = async (req) => {
-  const { refreshToken, email } = req.params;
+  const { refreshToken } = req.params;
   const result = await UserRefreshToken.findOne({ refreshToken });
 
-  const payload = isTokenValidRefreshToken({ token: result.refreshToken });
+  if (!result) throw new NotFoundError("Refresh token not valid!");
 
-  if (email !== payload.email) {
-    throw new BadRequestError("Email not valid!");
-  }
+  const payload = isTokenValidRefreshToken({ token: result.refreshToken });
 
   const userCheck = await Users.findOne({ email: payload.email });
 
