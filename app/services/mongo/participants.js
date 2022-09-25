@@ -112,8 +112,8 @@ const getOneEvent = async (req) => {
   const result = await Events.findOne({ _id: id })
     .populate([
       { path: "category", select: "name" },
-      { path: "talent", select: "name role image" },
       { path: "image", select: "name" },
+      { path: "talent", select: "name role image", populate: "image" },
     ])
     .lean();
 
