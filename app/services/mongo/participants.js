@@ -238,6 +238,17 @@ const checkoutOrder = async (req) => {
   return result;
 };
 
+const getAllPaymentByOrganizer = async (req) => {
+  const { organizer } = req.params;
+
+  const result = await Payments.find({ organizer })
+    .populate({ path: "image", select: "name" })
+    .select("-__v -createdAt -updatedAt")
+    .lean();
+
+  return result;
+};
+
 module.exports = {
   signupParticipant,
   activateParticipant,
@@ -246,4 +257,5 @@ module.exports = {
   getOneEvent,
   getAllOrders,
   checkoutOrder,
+  getAllPaymentByOrganizer,
 };
